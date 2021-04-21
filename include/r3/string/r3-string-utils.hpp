@@ -24,6 +24,19 @@ namespace r3 {
 			return result;
 		}
 
+		template <typename T> std::basic_string<T> join(const std::vector<std::basic_string<T>>& sourceStringList, T joinChar) {
+			std::basic_string<T> result;
+
+			for (auto stringIterator = sourceStringList.begin(); stringIterator != sourceStringList.end(); stringIterator++) {
+				result.append(*stringIterator);
+				if (std::next(stringIterator) != sourceStringList.end()) {
+					result.push_back(joinChar);
+				}
+			}
+
+			return result;
+		}
+
 	}
 
 }
