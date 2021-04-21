@@ -21,7 +21,7 @@ bool testSplit_SingleLine() {
 
 	bool result =
 		(stringList.size() == 1) &&
-		(stringList.at(0).find(singleLineString) == 0);
+		(stringList.at(0).compare(singleLineString) == 0);
 	return result;
 }
 
@@ -32,9 +32,9 @@ bool testSplit_MultiLine() {
 
 	bool result =
 		(stringList.size() == 4) &&
-		(stringList.at(0).find(L"Three") == 0) &&
-		(stringList.at(1).find(L"Whole") == 0) &&
-		(stringList.at(2).find(L"Lines!") == 0) &&
+		(stringList.at(0).compare(L"Three") == 0) &&
+		(stringList.at(1).compare(L"Whole") == 0) &&
+		(stringList.at(2).compare(L"Lines!") == 0) &&
 		(stringList.at(3).empty());
 	return result;
 }
@@ -55,7 +55,7 @@ bool testJoin_Single() {
 	std::string joinedString = r3::StringUtils::join(singleStringList, ' ');
 
 	bool result =
-		(joinedString.find("Hello world") == 0) &&
+		(joinedString.compare("Hello world") == 0) &&
 		(joinedString.size() == 11);
 	return result;
 }
@@ -68,7 +68,7 @@ bool testJoin_Multiple() {
 	std::wstring joinedString = r3::StringUtils::join(multiStringList, L'\n');
 
 	bool result =
-		(joinedString.find(L"Hello\nWorld!") == 0) &&
+		(joinedString.compare(L"Hello\nWorld!") == 0) &&
 		(joinedString.size() == 12);
 	return result;
 }

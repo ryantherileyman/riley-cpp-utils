@@ -13,7 +13,7 @@ namespace r3 {
 			bool doneFlag = false;
 			while (!doneFlag) {
 				size_t splitCharPos = sourceString.find(splitChar, currPos);
-				result.push_back(sourceString.substr(currPos, splitCharPos));
+				result.push_back(sourceString.substr(currPos, splitCharPos - currPos));
 
 				doneFlag = (splitCharPos == std::string::npos);
 				if (!doneFlag) {
