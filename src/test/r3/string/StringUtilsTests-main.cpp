@@ -74,15 +74,15 @@ bool testJoin_Multiple() {
 	return result;
 }
 
-template <typename T> bool testCharAtPosIsInCharSet_InRange(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharList, bool expectedResult) {
-	bool actualResult = r3::StringUtils::charAtPosIsInCharSet(sourceString, startPos, searchCharList);
+template <typename T> bool testCharAtPosIsInCharSet_InRange(const std::basic_string<T>& sourceString, size_t startPos, const T* includeCharSet, bool expectedResult) {
+	bool actualResult = r3::StringUtils::charAtPosIsInCharSet(sourceString, startPos, includeCharSet);
 	bool result = (actualResult == expectedResult);
 	return result;
 }
 
-template <typename T> bool testCharAtPostIsInCharSet_OutOfRange(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharList) {
+template <typename T> bool testCharAtPostIsInCharSet_OutOfRange(const std::basic_string<T>& sourceString, size_t startPos, const T* includeCharSet) {
 	try {
-		r3::StringUtils::charAtPosIsInCharSet(sourceString, startPos, searchCharList);
+		r3::StringUtils::charAtPosIsInCharSet(sourceString, startPos, includeCharSet);
 		return false;
 	}
 	catch ( std::out_of_range exception ) {
@@ -90,8 +90,8 @@ template <typename T> bool testCharAtPostIsInCharSet_OutOfRange(const std::basic
 	}
 }
 
-template <typename T> bool testFindNextPosInCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharList, size_t expectedResult) {
-	size_t actualResult = r3::StringUtils::findNextPosInCharSet(sourceString, startPos, searchCharList);
+template <typename T> bool testFindNextPosInCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* includeCharSet, size_t expectedResult) {
+	size_t actualResult = r3::StringUtils::findNextPosInCharSet(sourceString, startPos, includeCharSet);
 	bool result = (actualResult == expectedResult);
 	return result;
 }
