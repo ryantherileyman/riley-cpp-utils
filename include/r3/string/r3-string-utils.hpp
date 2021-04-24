@@ -37,6 +37,40 @@ namespace r3 {
 			return result;
 		}
 
+		template <typename T> bool charAtPosIsInCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharSet) {
+			T sourceChar = sourceString.at(startPos);
+
+			bool result = false;
+			for (const T* currSearchPtr = searchCharSet; *currSearchPtr != '\0'; currSearchPtr++) {
+				if (sourceChar == *currSearchPtr) {
+					result = true;
+					break;
+				}
+			}
+
+			return result;
+		}
+
+		template <typename T> size_t findNextPosFromCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharSet) {
+			size_t result = startPos;
+
+			bool doneFlag = false;
+			while (!doneFlag) {
+				if (result >= sourceString.size()) {
+					result = std::string::npos;
+					break;
+				}
+
+				doneFlag = charAtPosIsInCharSet(sourceString, result, searchCharSet);
+
+				if (!doneFlag) {
+					result++;
+				}
+			}
+
+			return result;
+		}
+
 	}
 
 }
