@@ -59,7 +59,7 @@ namespace r3 {
 		template bool charAtPosIsInCharSet<char>(const std::string& sourceString, size_t startPos, const char* searchCharSet);
 		template bool charAtPosIsInCharSet<wchar_t>(const std::wstring& sourceString, size_t startPos, const wchar_t* searchCharSet);
 
-		template <typename T> size_t findNextPosFromCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharSet) {
+		template <typename T> size_t findNextPosInCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharSet) {
 			size_t result = startPos;
 
 			bool doneFlag = false;
@@ -79,8 +79,31 @@ namespace r3 {
 			return result;
 		}
 
-		template size_t findNextPosFromCharSet<char>(const std::string& sourceString, size_t startPos, const char* searchCharSet);
-		template size_t findNextPosFromCharSet<wchar_t>(const std::wstring& sourceString, size_t startPos, const wchar_t* searchCharSet);
+		template size_t findNextPosInCharSet<char>(const std::string& sourceString, size_t startPos, const char* searchCharSet);
+		template size_t findNextPosInCharSet<wchar_t>(const std::wstring& sourceString, size_t startPos, const wchar_t* searchCharSet);
+
+		template <typename T> size_t findNextPosNotInCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* excludeCharSet) {
+			size_t result = startPos;
+
+			bool doneFlag = false;
+			while (!doneFlag) {
+				if (result >= sourceString.size()) {
+					result = std::string::npos;
+					break;
+				}
+
+				doneFlag = !charAtPosIsInCharSet(sourceString, result, excludeCharSet);
+
+				if (!doneFlag) {
+					result++;
+				}
+			}
+
+			return result;
+		}
+
+		template size_t findNextPosNotInCharSet<char>(const std::string& sourceString, size_t startPos, const char* excludeCharSet);
+		template size_t findNextPosNotInCharSet<wchar_t>(const std::wstring& sourceString, size_t startPos, const wchar_t* excludeCharSet);
 
 	}
 

@@ -90,20 +90,16 @@ template <typename T> bool testCharAtPostIsInCharSet_OutOfRange(const std::basic
 	}
 }
 
-template <typename T> bool testFindNextPosFromCharSet_InRange(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharList, size_t expectedResult) {
-	size_t actualResult = r3::StringUtils::findNextPosFromCharSet(sourceString, startPos, searchCharList);
+template <typename T> bool testFindNextPosInCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharList, size_t expectedResult) {
+	size_t actualResult = r3::StringUtils::findNextPosInCharSet(sourceString, startPos, searchCharList);
 	bool result = (actualResult == expectedResult);
 	return result;
 }
 
-template <typename T> bool testFindNextPosFromCharSet_OutOfRange(const std::basic_string<T>& sourceString, size_t startPos, const T* searchCharList) {
-	try {
-		r3::StringUtils::findNextPosFromCharSet(sourceString, startPos, searchCharList);
-		return false;
-	}
-	catch (std::out_of_range exception) {
-		return true;
-	}
+template <typename T> bool testFindNextPosNotInCharSet(const std::basic_string<T>& sourceString, size_t startPos, const T* excludeCharSet, size_t expectedResult) {
+	size_t actualResult = r3::StringUtils::findNextPosNotInCharSet(sourceString, startPos, excludeCharSet);
+	bool result = (actualResult == expectedResult);
+	return result;
 }
 
 int main() {
@@ -122,13 +118,20 @@ int main() {
 
 	assert(testCharAtPostIsInCharSet_OutOfRange(std::string("Basic\tWhite Space"), 17, "\t "));
 
-	assert(testFindNextPosFromCharSet_InRange(std::string("Basic\tWhite Space"), 0, "\t ", 5));
-	assert(testFindNextPosFromCharSet_InRange(std::wstring(L"Basic\tWhite Space"), 5, L"\t ", 5));
-	assert(testFindNextPosFromCharSet_InRange(std::string("Basic\tWhite Space"), 6, "\t ", 11));
-	assert(testFindNextPosFromCharSet_InRange(std::string("Basic\tWhite Space"), 12, "\t ", std::string::npos));
-	assert(testFindNextPosFromCharSet_InRange(std::string("Basic\tWhite Space"), 16, "\t ", std::string::npos));
-	assert(testFindNextPosFromCharSet_InRange(std::wstring(L"Basic\tWhite Space"), 17, L"\t ", std::string::npos));
-	assert(testFindNextPosFromCharSet_InRange(std::string("Basic\tWhite Space"), 50, "\t ", std::string::npos));
+	assert(testFindNextPosInCharSet(std::string("Basic\tWhite Space"), 0, "\t ", 5));
+	assert(testFindNextPosInCharSet(std::wstring(L"Basic\tWhite Space"), 5, L"\t ", 5));
+	assert(testFindNextPosInCharSet(std::string("Basic\tWhite Space"), 6, "\t ", 11));
+	assert(testFindNextPosInCharSet(std::string("Basic\tWhite Space"), 12, "\t ", std::string::npos));
+	assert(testFindNextPosInCharSet(std::string("Basic\tWhite Space"), 16, "\t ", std::string::npos));
+	assert(testFindNextPosInCharSet(std::wstring(L"Basic\tWhite Space"), 17, L"\t ", std::string::npos));
+	assert(testFindNextPosInCharSet(std::string("Basic\tWhite Space"), 50, "\t ", std::string::npos));
+
+	assert(testFindNextPosNotInCharSet(std::string("Basic\tWhite Space"), 0, "\t ", 0));
+	assert(testFindNextPosNotInCharSet(std::wstring(L"Basic\tWhite Space"), 5, L"\t ", 6));
+	assert(testFindNextPosNotInCharSet(std::string("Basic\tWhite Space"), 11, "\t ", 12));
+	assert(testFindNextPosNotInCharSet(std::string("Basic\tWhite Space"), 12, "\t ", 12));
+	assert(testFindNextPosNotInCharSet(std::string("Basic\tWhite Space"), 17, "\t ", std::string::npos));
+	assert(testFindNextPosNotInCharSet(std::wstring(L"Basic\tWhite Space"), 50, L"\t ", std::string::npos));
 
 	std::cout << "All tests passed!\n";
 	return 0;
